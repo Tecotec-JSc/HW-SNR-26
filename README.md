@@ -1,26 +1,59 @@
 # HW-SNR-26
 
-**Hệ thống Thu nhận, Ghi và Phân tích Tín hiệu Thuỷ âm**
-*Sound Registration and Analyzing System*
+**Phao Giám sát Thuỷ âm Thụ động — Vòng xoắn 1: Proof of Concept**
+*Passive Acoustic Monitoring Buoy — Spiral 1: Proof of Concept*
 
 ---
 
-## ⚠ ĐỌC TRƯỚC TIÊN
+## Vòng xoắn này chứng minh điều gì
 
-Dự án đang chờ **QĐ-0** — chưa chốt nhiệm vụ chính của hệ thống:
+> Đơn vị có chế tạo được một phao thu thuỷ âm thụ động **đủ yên tĩnh** để nghe được tín hiệu
+> quan tâm trong điều kiện biển thật hay không.
 
-| | **Hướng A — Đo chữ ký âm học** | **Hướng B — Giám sát thuỷ âm** |
+Bốn mệnh đề phải chứng minh, bằng dữ liệu thu ngoài biển thật:
+
+| # | Mệnh đề | Chứng minh ở |
 |---|---|---|
-| Câu hỏi trả lời | "Tàu của tôi ồn bao nhiêu dB?" | "Có mục tiêu nào trong khu vực không?" |
-| Yêu cầu bậc nhất | Độ chính xác tuyệt đối | Độ nhạy phát hiện |
-| Cảm biến | 1 thuỷ âm hiệu chuẩn chính xác | Mảng nhiều phần tử |
-| Triển khai | Phao nổi, theo đợt đo | Đặt đáy, trực canh dài ngày |
+| **PoC-1** | Chuỗi thu có nhiễu nội tại thấp hơn nhiễu môi trường | G2 bàn thí nghiệm → G3 biển |
+| **PoC-2** | **Phao giữ được thuỷ âm đủ yên tĩnh khi hoạt động thật** | **G3 biển** ⭐ |
+| **PoC-3** | Phát hiện được mục tiêu thật trong dữ liệu thật | G3 biển |
+| **PoC-4** | Dữ liệu lấy về được và phân tích được | G3 biển |
 
-Hai hướng dẫn tới **hai hệ thống khác nhau**. Toàn bộ tài liệu hiện tại viết theo
-**Hướng A**, dựa trên hệ tham chiếu trong `reference/`.
+**PoC-2 là mệnh đề khó nhất và là lý do tồn tại của vòng xoắn này.**
 
-**Chief Engineer cần chốt QĐ-0 trước khi bắt đầu thiết kế chi tiết.**
-Lập luận đầy đủ: `PROJECT-CHARTER.md` §1.
+---
+
+## Rủi ro chi phối: nhiễu do nền tảng, không phải nhiễu điện tử
+
+Một phao nổi **tự sinh ra tiếng ồn** ngay tại chỗ đặt thuỷ âm — dòng chảy qua cảm biến, rung
+dây neo, chuyển động phao truyền qua cáp, nhiễu ma sát điện khi cáp uốn. Tất cả tập trung ở
+**dải tần thấp**, đúng dải quan tâm nhất khi phát hiện tàu.
+
+Nhiễu điện tử là bài toán đã biết cách giải và giải được trên bàn. Nhiễu nền tảng chỉ lộ ra
+khi xuống nước, và nó quyết định hệ thống có dùng được hay không.
+
+> Vì thế **cơ cấu treo giảm chấn (A1.4)** và **kết cấu phao/neo (A8)** là hai hạng mục thiết
+> kế bậc nhất của vòng xoắn này, phải do cùng một nhóm làm. Chi tiết: `PROJECT-CHARTER.md` §4.
+
+---
+
+## SONRAS đóng vai trò gì
+
+Hệ tham chiếu **Scanmatic TMK-SAS / SONRAS** (`reference/`) cho ta **kiến trúc**, không cho
+ta nhiệm vụ:
+
+| | SONRAS | HW-SNR-26 |
+|---|---|---|
+| **Nhiệm vụ** | **Đo** chữ ký âm học tàu mình | **Giám sát** — nghe xem có gì trong khu vực |
+| Mục tiêu | Hợp tác, biết trước | **Không hợp tác, không biết trước** |
+| Cự ly tới mục tiêu | Biết | **Không biết** |
+| Đầu ra | Mức nguồn, chuẩn hoá về 1 m | **Mức thu được + danh sách phát hiện** |
+
+**Mượn:** phao tự hành + trạm điều khiển, GNSS hai đầu, vô tuyến cho dữ liệu đã xử lý, dữ liệu
+thô lấy sau khi thu hồi, đóng gói thành kit.
+
+**Không mượn:** bước **chuẩn hoá theo cự ly**. Nó cần biết vị trí mục tiêu — giám sát thụ động
+thì không biết. Đây là khác biệt quan trọng nhất giữa hai hệ.
 
 ---
 
@@ -28,43 +61,52 @@ Lập luận đầy đủ: `PROJECT-CHARTER.md` §1.
 
 | Tài liệu | Nội dung | Đọc khi nào |
 |---|---|---|
-| **`PROJECT-CHARTER.md`** | Điều lệ dự án: mục tiêu, CONOPS, phân rã hệ thống, lộ trình, rủi ro, quyết định mở | **Đọc đầu tiên** |
-| **`SYSTEM-SPECIFICATION.md`** | Cấu trúc, sơ đồ khối, chuỗi tín hiệu, ngân sách thiết kế, đặc tả 13 phân hệ | Khi bắt đầu thiết kế |
-| **`requirements/`** | Đặc tả yêu cầu theo Volere v20 — 27 mục + bản ghi yêu cầu nguyên tử | Khi viết hoặc rà yêu cầu |
-| `reference/` | Tài liệu hệ tham chiếu và mẫu Volere | Tra cứu |
+| **`PROJECT-CHARTER.md`** | Nhiệm vụ, phạm vi vòng 1, danh sách loại trừ, rủi ro, lộ trình xoắn ốc | **Đọc đầu tiên** |
+| **`SYSTEM-SPECIFICATION.md`** | Cấu trúc, sơ đồ khối, ngân sách nhiễu, đặc tả phân hệ | Khi bắt đầu thiết kế |
+| **`requirements/`** | Đặc tả yêu cầu Volere v20 — 27 mục + 20 yêu cầu nguyên tử | Khi viết hoặc rà yêu cầu |
+| `reference/` | Catalog hệ tham chiếu + mẫu Volere | Tra cứu |
 
 ### Thứ tự đọc cho kỹ sư mới
 
 ```
-1. README.md (file này)          — 5 phút, hiểu bối cảnh
-2. PROJECT-CHARTER.md §0, §1     — 15 phút, hiểu vấn đề chưa chốt
-3. PROJECT-CHARTER.md toàn bộ    — 1 giờ
-4. SYSTEM-SPECIFICATION.md §1-§4 — 1 giờ, cấu trúc và ngân sách
-5. Phần đặc tả phân hệ của mình  — SYSTEM-SPECIFICATION.md §5
-6. requirements/README.md        — khi cần viết yêu cầu
+1. README.md (file này)              — 5 phút
+2. PROJECT-CHARTER.md §1, §2, §4     — 30 phút: nhiệm vụ, phạm vi, rủi ro chi phối
+3. PROJECT-CHARTER.md toàn bộ        — 1 giờ
+4. SYSTEM-SPECIFICATION.md §1–§3     — 1 giờ: cấu trúc và ngân sách
+5. Phần đặc tả phân hệ của mình      — SYSTEM-SPECIFICATION.md §4
+6. requirements/README.md            — khi cần viết yêu cầu
 ```
 
 ---
 
-## Cấu trúc kho
+## Phép đo trung tâm của vòng xoắn 1
+
+Không cần mô hình lý thuyết phức tạp. Vòng 1 dùng **phép đo so sánh**:
 
 ```
-HW-SNR-26/
-├── README.md                     ← file này
-├── PROJECT-CHARTER.md            ← điều lệ dự án
-├── SYSTEM-SPECIFICATION.md       ← đặc tả hệ thống
-├── requirements/                 ← đặc tả yêu cầu Volere v20
-│   ├── README.md                 ← hướng dẫn + tình trạng
-│   ├── 01…27-*.md                ← 27 mục Volere
-│   ├── atomic-requirements.csv   ← bản ghi yêu cầu (16 trường Volere)
-│   └── _requirement-shell-template.md
-└── reference/
-    ├── 6. Catalog TMK-SAS.pdf              ← hệ tham chiếu Scanmatic
-    ├── con-of diagram.jpg                  ← sơ đồ tổng thể hệ tham chiếu
-    ├── Requirements Specification Template v20.doc  ← mẫu Volere
-    ├── Volere Atomic Requirements Stationery.xls
-    └── Volere Atomic Requirements example.xls
+   Đo A — TĨNH:  thuỷ âm thả từ tàu neo, biển lặng, cáp chùng, không phao
+   Đo B — THẬT:  thuỷ âm treo trên phao, đúng cấu hình triển khai
+
+   ĐÓNG GÓP CỦA NỀN TẢNG = Đo B − Đo A      (theo từng dải tần)
 ```
+
+Phải đo **cả hai trong cùng một chuyến**, cùng điều kiện môi trường, với **ít nhất hai cấu
+hình treo** khác nhau. Toàn bộ kế hoạch thử nghiệm biển nên được thiết kế quanh phép đo này.
+
+---
+
+## Phép đo của hệ giám sát thụ động
+
+```
+   RL = V_ADC(dB) − M − G + K            [dB re 1 µPa]
+
+   RL   Mức áp suất âm THU ĐƯỢC        ← sản phẩm đầu ra
+   M    Độ nhạy thuỷ âm  [dB re 1V/µPa]  ← hồ sơ hiệu chuẩn
+   G    Tổng độ lợi      [dB]            ← metadata, PHẢI ghi mọi lần đổi nấc
+   K    Hệ số hiệu chuẩn [dB]            ← hồ sơ hiệu chuẩn
+```
+
+**Không có số hạng suy hao truyền âm, không quy về 1 m** — khác SONRAS.
 
 ---
 
@@ -72,46 +114,42 @@ HW-SNR-26/
 
 | Chỉ số | Giá trị |
 |---|---|
-| Yêu cầu đã ghi | 25 |
-| Thiếu Fit Criterion | 1 (yêu cầu 2.0 — sai số công bố) |
-| Xung đột yêu cầu chưa giải | 1 (kênh nghe tương tự ↔ mã hoá) |
-| Quyết định mở | 15 (QĐ-0 … QĐ-15) |
-| Mục Volere còn trống | 8 / 27 |
-| Cổng hiện tại | **G1 — Đồng thuận & Đặc tả** |
+| Cổng hiện tại | **G1 — Đặc tả** |
+| Yêu cầu đã ghi | 20 |
+| Thiếu Fit Criterion | **1** — yêu cầu 2.0 (ngưỡng YC-02) |
+| Xung đột yêu cầu | 0 |
+| Quyết định mở | 10 |
+| Quyết định đã đóng | 7 (gồm QĐ-0 — nhiệm vụ) |
+| Mục Volere không áp dụng ở vòng 1 | 6 / 27 (có chủ ý, đã ghi lý do) |
 
-### Ba việc cần làm ngay
+### Khoảng trống nghiêm trọng nhất
 
-| # | Việc | Ai | Chặn |
-|---|---|---|---|
-| 1 | **Chốt QĐ-0** — nhiệm vụ chính | Chief Engineer | toàn bộ thiết kế |
-| 2 | Đọc **ISO 17208**, đối chiếu các mục còn trống | 1 kỹ sư | nhiều mục yêu cầu |
-| 3 | **Ngân sách nhiễu + ngân sách sai số** (WP-1) | Kỹ sư analog + đo lường | YC-01, YC-13 |
+**Ngưỡng cho YC-02 chưa có.** Đó là phát biểu định lượng của PoC-2. Không có ngưỡng thì không
+phán quyết được vòng xoắn đạt hay không đạt. Chặn bởi **QĐ-2**, phải đóng trước G1.
 
-Việc 2 và 3 **không** bị chặn bởi QĐ-0 — bắt đầu được ngay hôm nay.
+### Ba việc cần làm ngay — đường găng
+
+| # | Việc | Ai |
+|---|---|---|
+| 1 | **Đặt ngưỡng cho YC-02** | Chief Engineer + kỹ sư đo lường |
+| 2 | **Ngân sách nhiễu** chuỗi điện tử | Kỹ sư analog |
+| 3 | **Thiết kế ≥2 phương án treo giảm chấn** | Kỹ sư cơ khí |
+
+Ngoài đường găng, nên làm sớm nhất có thể: **đo nhiễu nền vùng thử nghiệm** — mọi ngưỡng
+trong YC-01 và YC-02 đều tham chiếu về nhiễu môi trường thật. Làm bằng thiết bị đi mượn cũng
+được, không cần chờ phần cứng của mình.
 
 ---
 
-## Hai con số cần thuộc
+## Ngoài phạm vi vòng xoắn 1
 
-**1. Phương trình đo** — mọi kỹ sư trong dự án cần hiểu:
+Định hướng và định vị nguồn · phân loại tự động · trực canh dài ngày · truy xuất chuẩn đo
+lường đầy đủ · mã hoá · kênh nghe tương tự · sản phẩm hoá · chịu biển khắc nghiệt.
 
-```
-SL = SPL_đo + TL(r, f)        SPL_đo = V_ADC(dB) − M − G_tổng + K
+Tất cả nằm ở `requirements/26-waiting-room.md` kèm vòng xoắn dự kiến.
 
-SL   mức nguồn [dB re 1µPa @1m]      M  độ nhạy thuỷ âm  [dB re 1V/µPa]
-TL   suy hao truyền âm [dB]          G  tổng độ lợi      [dB]
-r    cự ly, tính từ GNSS hai đầu     K  hệ số hiệu chuẩn [dB]
-```
-
-Sai số của **mỗi** số hạng cộng thẳng vào sai số kết quả.
-
-**2. Quan hệ thời gian ↔ cự ly** — với c ≈ 1500 m/s trong nước biển:
-
-```
-Δt = 1 ms  ⇒  Δd = 1.5 m
-```
-
-Đặt trần cho toàn bộ độ chính xác định vị của hệ thống.
+> **Quy tắc:** ai muốn thêm một hạng mục vào vòng 1 phải trả lời được *"nó gỡ rủi ro nào
+> trong PoC-1…PoC-4?"* Không trả lời được thì vào phòng chờ.
 
 ---
 
@@ -119,18 +157,17 @@ Sai số của **mỗi** số hạng cộng thẳng vào sai số kết quả.
 
 | Ký hiệu | Ý nghĩa |
 |---|---|
-| `[CHỐT]` | Đã quyết định, đổi phải qua change request |
-| `[GIẢ ĐỊNH]` | Đang dùng làm cơ sở thiết kế nhưng **chưa xác minh** |
-| `[MỞ]` | Chưa quyết định — **không tự ý chọn thay**, báo Chief Engineer |
-| `[THAM CHIẾU]` | Số liệu của hệ tham chiếu TMK-SAS, không phải yêu cầu của ta |
+| `[CHỐT]` | Đã quyết định |
+| `[GIẢ ĐỊNH]` | Cơ sở thiết kế nhưng **chưa xác minh** |
+| `[MỞ]` | Chưa quyết định — báo Chief Engineer, không tự chọn |
+| `[THAM CHIẾU]` | Số của hệ tham chiếu TMK-SAS — **không phải** yêu cầu của ta |
 | `[TÍNH]` | Giá trị suy ra bằng tính toán, có trình bày trong tài liệu |
+| `[V2+]` | Cố ý đẩy sang vòng xoắn sau |
 
 ---
 
 ## Phạm vi kho tài liệu
 
-Kho này chỉ chứa **nội dung kỹ thuật**. Không chứa: điều khoản thương mại và giá,
-danh tính đối tác và vấn đề kiểm soát xuất khẩu, địa điểm triển khai cụ thể và dữ liệu
-khảo sát, thông tin khách hàng và tiến trình phê duyệt.
-
-Cần các thông tin trên để ra quyết định kỹ thuật → đề nghị qua Chief Engineer.
+Chỉ chứa **nội dung kỹ thuật**. Không chứa điều khoản thương mại và giá, danh tính đối tác và
+vấn đề kiểm soát xuất khẩu, địa điểm triển khai cụ thể, thông tin khách hàng và tiến trình
+phê duyệt. Cần các thông tin đó để ra quyết định kỹ thuật → đề nghị qua Chief Engineer.

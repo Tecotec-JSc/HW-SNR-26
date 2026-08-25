@@ -1,8 +1,8 @@
 # 15. Security Requirements — Yêu cầu an ninh
 
-> **Volere v20 §15** · Đặc tả Yêu cầu HW-SNR-26
-> **Trạng thái:** 🟡 Đang soạn
-> **Phụ trách:** Chief Engineer
+> **Volere v20 §15** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
+> **Trạng thái:** ⬛ Không áp dụng ở vòng 1
+> **Phụ trách:** —
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
@@ -11,26 +11,13 @@
 
 ---
 
-## Đã có
+## Nội dung
 
-| Volere | Yêu cầu | Nguồn |
-|---|---|---|
-| 15b/15c | CN-06 — mã hoá dữ liệu lưu trong phao **và** dữ liệu truyền | Charter §6.2 |
-| 15b | Toàn vẹn dữ liệu, phát hiện được hỏng (ĐT-A5-07) | SPEC §5.5 |
+⬛ **Không áp dụng ở vòng xoắn 1.**
 
-## Khoảng trống
+Mã hoá và kiểm soát truy cập đã **bỏ khỏi vòng 1** vì không gỡ rủi ro PoC nào.
 
-| Mục | Câu hỏi | Mức độ |
-|---|---|---|
-| 15a | Ai được truy cập dữ liệu? Có phân quyền không? | 🔴 chưa xét |
-| 15d | Có cần nhật ký kiểm toán (ai xem/sửa/xuất dữ liệu gì, khi nào)? | 🔴 chưa xét |
-| 15e | Chống can thiệp vật lý khi phao trôi nổi không người trông? | 🔴 chưa xét |
-| — | Nếu mất phao, dữ liệu có bị đọc được không? | 🟡 CN-06 giảm nhẹ |
+Giữ lại một yêu cầu duy nhất, nhưng nó thuộc nhóm **toàn vẹn dữ liệu** chứ không phải an ninh: dữ liệu thô phải có kiểm tra toàn vẹn để phát hiện hỏng (SPEC ĐT-A5-04). Mất dữ liệu thô của một chuyến biển là mất cả chuyến.
 
-> ⚠ **Xung đột đã biết:** CN-02 (kênh nghe tương tự) không mã hoá được → mâu thuẫn CN-06.
-> Xem QĐ-11 và `09-functional.md`.
-
-> ⚠ **15e — miễn nhiễm:** một phao đo thả trên biển là tài sản không người trông coi.
-> Rủi ro không chỉ là mất thiết bị mà là **mất dữ liệu** và **lộ cấu hình hệ thống**.
-> Cần quyết định mức bảo vệ trước khi thiết kế A5.
+Xem `26-waiting-room.md`. Phần này sẽ được soạn khi lập kế hoạch vòng xoắn tương ứng.
 

@@ -1,13 +1,13 @@
 # 5. Relevant Facts and Assumptions — Sự kiện liên quan và giả định
 
-> **Volere v20 §5** · Đặc tả Yêu cầu HW-SNR-26
+> **Volere v20 §5** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
 > **Trạng thái:** 🟡 Đang soạn
 > **Phụ trách:** Kỹ sư hệ thống
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-**5a** Relevant facts (sự thật bên ngoài ảnh hưởng tới sản phẩm) · **5b** Business rules · **5c** Assumptions (điều ta đang cho là đúng mà **chưa kiểm chứng**).
+**5a** Relevant facts · **5b** Business rules · **5c** Assumptions (chưa kiểm chứng).
 
 ---
 
@@ -15,26 +15,28 @@
 
 | # | Sự kiện | Nguồn |
 |---|---|---|
-| SK-1 | Tốc độ âm trong nước biển ≈ 1500 m/s — quyết định quan hệ thời gian↔cự ly | Vật lý |
-| SK-2 | ADC 16 bit cho SNR lý thuyết ≈ 98 dB, thực tế ≈ 89 dB | SPEC §4.2 |
-| SK-3 | Dữ liệu thô 1 kênh @42 kS/s = 84 kB/s = 302 MB/giờ | SPEC §2.3 |
-| SK-4 | Modem UHF dư băng thông ~1300× so với nhu cầu dữ liệu đã xử lý | SPEC §2.3 |
-| SK-5 | PPS của GNSS phổ thông chính xác cỡ chục ns — dư 4 bậc so với yêu cầu 1 ms | SPEC §4.4 |
+| SK-1 | Tốc độ âm trong nước biển ≈ 1500 m/s | Vật lý |
+| SK-2 | ADC 16 bit: SNR lý thuyết ≈ 98 dB, thực tế ≈ 89 dB | SPEC §3.2 |
+| SK-3 | Dữ liệu thô 1 kênh @42 kS/s = 84 kB/s = 302 MB/giờ | SPEC §2.2 |
+| SK-4 | Modem UHF dư băng thông rất lớn so với nhu cầu dữ liệu đã xử lý | SPEC §2.2 |
+| SK-5 | GNSS PPS chính xác cỡ chục ns — dư sức cho yêu cầu vòng 1 | SPEC §3.4 |
+| SK-6 | Hệ tham chiếu SONRAS là phao **đo**, triển khai vài giờ, chọn được thời tiết | Catalog TMK-SAS |
 
-## 5c. Giả định — **danh sách kiểm soát rủi ro chính của dự án**
+> **SK-6 là sự kiện quan trọng nhất trong bảng này.** Nó giải thích vì sao tài liệu tham
+> chiếu không bàn tới bài toán nhiễu nền tảng — và vì sao ta phải tự giải.
 
-Mọi mục `[GIẢ ĐỊNH]` trong Charter và Spec phải xuất hiện ở đây.
+## 5c. Giả định — danh sách kiểm soát rủi ro
 
-| # | Giả định | Nếu sai thì sao | Kiểm chứng bằng | Trạng thái |
+| # | Giả định | Nếu sai thì sao | Kiểm chứng | Trạng thái |
 |---|---|---|---|---|
-| GĐ-1 | Nhiệm vụ chính là **đo chữ ký** (Hướng A), không phải giám sát | Thiết kế sai toàn bộ | QĐ-0 | 🔴 **chưa kiểm chứng** |
-| GĐ-2 | Dải tần công tác giống hệ tham chiếu (3 Hz–100 kHz) | Chọn sai ADC, thuỷ âm | QĐ-1 + đọc ISO 17208 | 🔴 |
-| GĐ-3 | Cần dải trên 20 kHz | Thừa phần cứng, tốn điện | QĐ-10 | 🔴 |
-| GĐ-4 | Cấu hình phao nổi phù hợp | Đổi toàn bộ cơ khí + đường truyền | QĐ-0 | 🟡 |
-| GĐ-5 | GNSS thường (±5 m) đủ chính xác | Phải nâng lên RTK, đội chi phí | Sau khi có YC-13 | 🟡 |
-| GĐ-6 | 16 bit đủ phủ dải động | Phải đổi ADC hoặc thêm nấc PGA | WP-1 | 🟡 |
-| GĐ-7 | Nhiễu nền môi trường ở vùng đo nằm trong mức thiết kế | Giảm dải đo hữu ích | Đo thực địa | 🔴 |
+| GĐ-1 | Chế tạo được cơ cấu treo đủ giảm nhiễu nền tảng | **PoC thất bại** — tiêu chí dừng D-2 | Phép đo SPEC §3.3 | 🔴 **cốt lõi** |
+| GĐ-2 | Nhiễu môi trường vùng thử nằm trong mức thiết kế | Giảm dải đo hữu ích | Đo thực địa sớm | 🔴 |
+| GĐ-3 | Dải tần công tác đã chọn đúng với mục tiêu quan tâm | Nghe sai dải, không phát hiện được | QĐ-1 | 🔴 |
+| GĐ-4 | 16 bit đủ phủ dải động | Phải đổi ADC hoặc thêm nấc PGA | Ngân sách nhiễu | 🟡 |
+| GĐ-5 | GNSS thường đủ chính xác cho vòng 1 | Cần RTK | Đúng vì không chuẩn hoá cự ly | 🟢 |
+| GĐ-6 | Có mục tiêu thật đi qua trong lúc thử nghiệm | **Không chứng minh được PoC-3** | Chọn vùng có giao thông; tàu hợp tác dự phòng | 🔴 RR-08 |
+| GĐ-7 | Thuật toán phát hiện đơn giản là đủ cho vòng 1 | Phải làm phức tạp hơn | QĐ-7 | 🟡 |
 
-> **Nguyên tắc Volere:** giả định chưa kiểm chứng là rủi ro chưa được đặt tên.
-> Mỗi dòng 🔴 ở trên phải có người chịu trách nhiệm đóng trước cổng G1.
+> **GĐ-1 là giả định mà cả vòng xoắn đặt cược vào.** Nếu nó sai, tiêu chí dừng D-2 kích hoạt.
+> Việc phát hiện điều đó ở vòng 1 — chứ không phải vòng 3 — chính là giá trị của mô hình xoắn ốc.
 

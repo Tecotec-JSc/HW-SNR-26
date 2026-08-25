@@ -1,13 +1,13 @@
 # 3. Constraints — Ràng buộc
 
-> **Volere v20 §3** · Đặc tả Yêu cầu HW-SNR-26
+> **Volere v20 §3** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
 > **Trạng thái:** 🟡 Đang soạn
 > **Phụ trách:** Chief Engineer
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-**3a** Solution constraints (giải pháp bị bắt buộc phải thế nào) · **3b** Implementation environment of the current system · **3c** Partner/collaborative applications · **3d** Off-the-shelf software · **3e** Anticipated workplace environment · **3f** Schedule · **3g** Budget · **3h** Enterprise constraints.
+**3a** Solution constraints · **3b** Implementation environment · **3c** Partner applications · **3d** Off-the-shelf software · **3e** Workplace environment · **3f** Schedule · **3g** Budget · **3h** Enterprise constraints.
 
 ---
 
@@ -15,26 +15,24 @@
 
 | ID | Ràng buộc | Nguồn | Trạng thái |
 |---|---|---|---|
-| RB-01 | Kiến trúc hai phân hệ: phao đo + trạm điều khiển | Hệ tham chiếu TMK-SAS | 🟡 giả định |
-| RB-02 | Không tự phát triển gốm áp điện / phần tử thu — mua ngoài | Charter §2.4 | 🟢 chốt |
-| RB-03 | Lõi xử lý phải độc lập cấu hình phần cứng | Charter §5.1, TC-3 | 🟢 chốt |
-| RB-04 | Dữ liệu thô chỉ lấy được sau khi thu hồi phao | Ràng buộc băng thông — SPEC §2.3 | 🟢 chốt (vật lý) |
+| RB-01 | Kiến trúc phao + trạm điều khiển, mượn từ hệ tham chiếu | SONRAS | 🟢 |
+| RB-02 | Thuỷ âm mua ngoài, không tự chế tạo | Charter §2.3 | 🟢 |
+| RB-03 | **Thụ động** — không phát bất kỳ tín hiệu âm nào | Định nghĩa nhiệm vụ | 🟢 |
+| RB-04 | Một thuỷ âm ở vòng 1, không phải mảng | Charter §2.3 | 🟢 |
+| RB-05 | Chuỗi xử lý phải chạy được ngoại tuyến trên file đã ghi | SPEC ĐT-C1-04 | 🟢 |
+| RB-06 | Dữ liệu thô chỉ lấy được sau khi thu hồi phao | Ràng buộc băng thông vật lý | 🟢 |
+| RB-07 | Phải thử được ≥2 cấu hình treo giảm chấn trong vòng 1 | PoC-2 | 🟢 |
 
-## 3e. Môi trường làm việc dự kiến
+## 3e. Môi trường làm việc
 
-Trắc thủ làm việc **trên tàu đang chạy**: rung, lắc, nắng gắt, tay ướt, có thể đeo găng.
-Ảnh hưởng trực tiếp tới §10 (Look and Feel) và §11 (Usability) — **không được thiết kế giao
-diện như phần mềm desktop văn phòng.**
+Đội kỹ thuật làm việc **trên tàu**: rung, lắc, nắng, thời gian trên biển hạn chế và tốn kém.
+
+**Hệ quả thiết kế quan trọng:** phải đổi được cấu hình treo **ngoài hiện trường**. Nếu phải
+về xưởng mới đổi được thì mỗi chuyến chỉ thử được một cấu hình, và RB-07 không đạt trong
+một chuyến biển. Xem SPEC ĐT-A1.4-03.
 
 ## 3f / 3g. Tiến độ và ngân sách
 
-> Không ghi trong repo này — xem `../PROJECT-CHARTER.md` §14.
-> Lưu ý kỹ thuật: Charter §8 nêu rõ **chưa lập được mốc tiến độ đáng tin** cho tới khi
-> QĐ-0 chốt và WP-1 xong.
-
-## Việc cần làm
-| Việc | Ai | Hạn |
-|---|---|---|
-| Chốt RB-01 (phụ thuộc QĐ-0) | Chief Engineer | **chặn mọi việc** |
-| Liệt kê 3d — phần mềm/thư viện bên thứ ba dự kiến dùng | Kỹ sư phần mềm | trước G1 |
+Không ghi trong repo này. Ràng buộc kỹ thuật liên quan: **số chuyến biển là nguồn lực khan
+hiếm nhất của vòng 1** — kế hoạch thử nghiệm phải tối đa hoá thông tin thu được mỗi chuyến.
 

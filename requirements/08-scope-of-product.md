@@ -1,42 +1,41 @@
 # 8. The Scope of the Product — Phạm vi sản phẩm
 
-> **Volere v20 §8** · Đặc tả Yêu cầu HW-SNR-26
+> **Volere v20 §8** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
 > **Trạng thái:** 🟡 Đang soạn
-> **Phụ trách:** BA / Kỹ sư hệ thống
+> **Phụ trách:** Kỹ sư hệ thống
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-**8a** Product boundary (ranh giới sản phẩm — cái gì tự động hoá, cái gì để con người làm) · **8b** Product Use Case table (**PUC**) · **8c** Individual product use cases.
+**8a** Product boundary · **8b** Product Use Case table (PUC) · **8c** Individual PUCs.
 
 ---
 
-## 8b. Bảng Product Use Case
+## 8b. Product Use Case — vòng xoắn 1
 
-Bốn chế độ vận hành CĐ-1…CĐ-4 (`../PROJECT-CHARTER.md` §3.5) ánh xạ gần như trực tiếp
-thành PUC. Đây là **trục đánh số mà mọi atomic requirement sẽ tham chiếu tới** (cột
-*Product Use Case Number* trong `atomic-requirements.csv`).
+Trục đánh số mà mọi atomic requirement tham chiếu tới.
 
-| PUC # | Tên | Actor | BUC liên quan | Trạng thái |
+| PUC # | Tên | Actor | BUC | Trạng thái |
 |---|---|---|---|---|
-| PUC-1 | Cấu hình và triển khai phao | Kỹ thuật viên triển khai | BUC-1 | 🔴 chưa viết |
-| PUC-2 | Giám sát thu thập thời gian thực (CĐ-1) | Trắc thủ | BUC-1 | 🟡 |
-| PUC-3 | Nghe kênh âm thanh trực tiếp | Trắc thủ | BUC-1 | 🟡 |
-| PUC-4 | Phát lại dữ liệu đã ghi (CĐ-2) | Trắc thủ / Nhà phân tích | BUC-1 | 🟡 |
-| PUC-5 | Định vị sự kiện đa phao (CĐ-3) | Nhà phân tích | BUC-4 | 🔴 tuỳ chọn |
-| PUC-6 | Xử lý hậu kỳ dữ liệu thô (CĐ-4) | Nhà phân tích | BUC-1 | 🟡 |
-| PUC-7 | Thu hồi phao và trích xuất dữ liệu | Kỹ thuật viên triển khai | BUC-1 | 🔴 |
-| PUC-8 | Hiệu chuẩn và kiểm tra hệ thống | Kỹ sư hiệu chuẩn | BUC-2 | 🔴 |
-| PUC-9 | Quản lý thư viện chữ ký | Nhà phân tích | BUC-3 | 🔴 |
+| PUC-1 | Cấu hình và thả phao | Kỹ sư field | BUC-1 | 🟡 |
+| PUC-2 | Thu nhận và ghi liên tục | (tự động) | BUC-1 | 🟡 |
+| PUC-3 | Phát hiện sự kiện và báo về trạm | (tự động) | BUC-1 | 🟡 |
+| PUC-4 | Giám sát thời gian thực tại trạm | Kỹ sư field | BUC-1 | 🟡 |
+| PUC-5 | Thu hồi phao và trích xuất dữ liệu | Kỹ sư field | BUC-1 | 🟡 |
+| PUC-6 | Phân tích hậu kỳ và so sánh cấu hình treo | Kỹ sư phân tích | BUC-2 | 🟡 |
+| PUC-7 | Hiệu chuẩn và tự kiểm tra | Kỹ sư hiệu chuẩn | BUC-3 | 🟡 |
 
-> **Quy tắc đánh số:** PUC number ở đây là khoá liên kết cho toàn bộ đặc tả.
-> Không đổi số đã cấp; nếu bỏ một PUC thì để trống số đó, không tái sử dụng.
+**Đã bỏ so với phiên bản trước:** nghe kênh âm thanh trực tiếp, phát lại đồng bộ, định vị
+đa phao, quản lý thư viện chữ ký. Tất cả `[V2+]`.
 
-## 8a. Ranh giới sản phẩm — câu hỏi chưa trả lời
+## 8a. Ranh giới sản phẩm ở vòng 1
 
-- Việc **lập kế hoạch lộ trình chạy tàu** có nằm trong sản phẩm không, hay do người dùng tự làm ngoài?
-- Việc **dựng báo cáo cuối** là sản phẩm sinh tự động hay nhà phân tích tự soạn?
-- **Quản lý thư viện chữ ký** là chức năng của sản phẩm này hay một hệ thống riêng?
+**Trong sản phẩm:** thu, ghi, phân tích phổ, phát hiện sự kiện, báo cáo trạng thái, trích
+xuất dữ liệu, phân tích hậu kỳ cơ bản.
 
-> Ba câu hỏi trên quyết định khối lượng công việc phần mềm. Cần Chief Engineer trả lời trước G1.
+**Ngoài sản phẩm, do người làm:** lập kế hoạch chuyến biển, chọn vị trí thả, đối chiếu sự
+kiện với quan sát bên ngoài, phán quyết đạt/không đạt, viết báo cáo vòng xoắn.
+
+> Ở một PoC, ranh giới nên đặt **rộng về phía con người**. Tự động hoá thứ chưa hiểu rõ là
+> cách chắc chắn để tốn thời gian mà không gỡ được rủi ro nào.
 

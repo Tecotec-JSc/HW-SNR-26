@@ -1,42 +1,43 @@
 # 6. The Scope of the Work — Phạm vi công việc
 
-> **Volere v20 §6** · Đặc tả Yêu cầu HW-SNR-26
-> **Trạng thái:** 🔴 Trống
-> **Phụ trách:** BA / Kỹ sư hệ thống
+> **Volere v20 §6** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
+> **Trạng thái:** 🟡 Đang soạn
+> **Phụ trách:** Kỹ sư hệ thống
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-**6a** Current situation · **6b** Context of the work (sơ đồ ngữ cảnh: hệ thống lân cận + luồng dữ liệu vào/ra) · **6c** Work partitioning (danh sách **Business Use Case — BUC**) · **6d** Specifying a business use case.
+**6a** Current situation · **6b** Context of the work · **6c** Work partitioning (BUC) · **6d** Specifying a business use case.
 
 ---
 
-## 6b. Sơ đồ ngữ cảnh — cần vẽ
-
-Phải thể hiện: hệ thống HW-SNR-26 ở giữa, và mọi thực thể bên ngoài trao đổi dữ liệu với nó.
-Ứng viên đã biết:
+## 6b. Sơ đồ ngữ cảnh — vòng xoắn 1
 
 ```
-   [Tàu / vật thể cần đo]  ──âm thanh──►  ┌──────────────┐
-   [Vệ tinh GNSS]          ──vị trí,     │              │
-                              thời gian──►│  HW-SNR-26   │──►[Báo cáo chữ ký]
-   [Trắc thủ]               ──lệnh──────►│              │──►[Thư viện chữ ký]
-   [Phòng hiệu chuẩn]       ──hệ số─────►│              │──►[Hệ thống bên thứ ba]
-   [Môi trường biển]        ──nhiễu─────►└──────────────┘
+   [Nguồn âm trong khu vực]  ──âm thanh──►┌───────────────┐
+   (tàu, sinh vật, môi trường)            │               │
+                                          │  HW-SNR-26    │──►[Dữ liệu thô + metadata]
+   [Vệ tinh GNSS] ──vị trí, thời gian────►│   Vòng 1      │──►[Danh sách sự kiện]
+                                          │               │──►[Phổ nhiễu nền]
+   [Đội kỹ thuật] ──thả/thu/cấu hình─────►│               │
+                                          └───────────────┘
+   [Phòng hiệu chuẩn] ──hệ số M, K───────►      ▲
+                                                │
+   [Môi trường biển] ──nhiễu, dòng chảy, sóng───┘
 ```
 
-> Sơ đồ trên là **bản nháp**. Cần rà: còn thực thể ngoài nào chưa liệt kê?
-> (Ví dụ: cơ quan cấp phép tần số? hệ thống lưu trữ của khách hàng?)
+**Đầu ra "Phổ nhiễu nền" là sản phẩm đặc thù của vòng 1** — nó không phải sản phẩm của hệ
+thống cuối, mà là bằng chứng để phán quyết PoC-1 và PoC-2.
 
-## 6c. Business Use Cases (BUC)
+## 6c. Business Use Cases — vòng xoắn 1
 
-| BUC # | Tên | Sự kiện kích hoạt | Trạng thái |
-|---|---|---|---|
-| BUC-1 | Thực hiện một chiến dịch đo chữ ký tàu | Có yêu cầu đo | 🔴 chưa viết |
-| BUC-2 | Hiệu chuẩn lại hệ thống định kỳ | Đến hạn hiệu chuẩn | 🔴 |
-| BUC-3 | Tra cứu / đối chiếu thư viện chữ ký | Có nhu cầu phân tích | 🔴 |
-| BUC-4 | Xác định vị trí nguồn sóng xung kích | Có sự kiện cần định vị | 🔴 tuỳ chọn |
+| BUC # | Tên | Trạng thái |
+|---|---|---|
+| **BUC-1** | Thực hiện một chuyến thử nghiệm biển: đo tĩnh, đo động, ≥2 cấu hình treo | 🔴 cần viết chi tiết |
+| BUC-2 | Phân tích dữ liệu sau chuyến, so sánh cấu hình treo | 🔴 |
+| BUC-3 | Hiệu chuẩn và kiểm tra hệ thống trước/sau chuyến | 🔴 |
 
-> BUC mô tả **công việc nghiệp vụ**, chưa phải sản phẩm. Chu trình 6 pha P1–P6 ở
-> `../PROJECT-CHARTER.md` §3.4 chính là nội dung của BUC-1 — chuyển thể sang mẫu BUC.
+> **BUC-1 là use case trung tâm và cần được viết chi tiết trước chuyến biển đầu tiên.**
+> Một chuyến biển tốn kém; nếu quy trình không được nghĩ trước, sẽ về tay không hoặc thiếu
+> dữ liệu đối chứng. Xem `../PROJECT-CHARTER.md` §9 việc 9.
 

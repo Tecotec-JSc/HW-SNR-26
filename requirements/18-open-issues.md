@@ -1,41 +1,40 @@
 # 18. Open Issues — Vấn đề còn mở
 
-> **Volere v20 §18** · Đặc tả Yêu cầu HW-SNR-26
+> **Volere v20 §18** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
 > **Trạng thái:** 🟢 Đủ để review
 > **Phụ trách:** Chief Engineer
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-Vấn đề đã được nêu ra nhưng **chưa có lời giải**, và có thể ảnh hưởng tới thành bại của dự án. Volere yêu cầu ghi lại để chúng không bị quên.
+Vấn đề đã nêu nhưng **chưa có lời giải**, có thể ảnh hưởng thành bại của vòng xoắn.
 
 ---
 
-## Danh mục quyết định mở
-
-Nguồn: `../PROJECT-CHARTER.md` §11 và `../SYSTEM-SPECIFICATION.md` §7.
+## Quyết định mở
 
 | # | Vấn đề | Chặn | Mức |
 |---|---|---|---|
-| **QĐ-0** | **Nhiệm vụ chính: đo chữ ký (A) hay giám sát (B)?** | **Toàn bộ thiết kế** | 🔴 tối cao |
-| QĐ-1 | Dải tần công tác | Chọn thuỷ âm, ADC, fs | 🔴 |
-| QĐ-2 | Sai số tổng của mức nguồn công bố (YC-13) | Toàn bộ ngân sách sai số, tiêu chí nghiệm thu | 🔴 cao |
-| QĐ-3 | Có làm chế độ định vị đa phao không | Số phao, yêu cầu đồng bộ | 🟡 |
-| QĐ-4 | Phương án đường truyền | L1.7, kiến trúc SS-B | 🟡 |
-| QĐ-5 | Thời gian hoạt động mục tiêu | Thiết kế nguồn, kết cấu phao | 🟡 |
-| QĐ-6 | Chu kỳ và phương pháp hiệu chuẩn | C3, chi phí vận hành | 🟡 |
-| QĐ-7 | 16 bit có đủ dải động không | A3 | 🟡 |
-| QĐ-8 | Trạng thái biển và điều kiện môi trường thiết kế | A8, kế hoạch thử nghiệm | 🟡 |
-| QĐ-9 | PGA: chuyển nấc tự động hay cố định | A2.2, quy trình đo | 🟡 |
-| QĐ-10 | Kiến trúc nhánh dải cao (PA-1 hay PA-2) | A2, A3, A5, CĐ-4 | 🟡 |
-| QĐ-11 | Kênh nghe: giữ tương tự hay chuyển số | A7.2 ↔ CN-06 xung đột | 🟡 |
-| QĐ-12 | Mô hình suy hao truyền âm | Toàn bộ độ chính xác đầu ra | 🟡 |
+| **QĐ-2** | **Ngưỡng YC-02** (nhiễu khi phao hoạt động thật) và sai số công bố YC-07 | **Tiêu chí đạt/không đạt của cả PoC** | 🔴 |
+| **QĐ-1** | Dải tần công tác | Thuỷ âm, ADC, fs, thiết kế treo | 🔴 |
+| **QĐ-3** | Phương án treo giảm chấn (≥2 để thử) | A1.4, A8 — rủi ro chi phối | 🔴 |
+| **QĐ-4** | Neo cố định hay thả trôi | A8, RR-01, kế hoạch thử nghiệm | 🔴 |
+| QĐ-5 | Thời lượng một đợt triển khai | A9, A5 | 🟡 |
+| QĐ-6 | Mức hiệu chuẩn cần cho PoC | C3, chi phí | 🟡 |
+| QĐ-7 | Thuật toán phát hiện sự kiện vòng 1 | A4.2 | 🟡 |
+| QĐ-8 | Khu vực và cửa sổ thời gian thử nghiệm | Kế hoạch, RR-04, RR-08 | 🟡 |
+| QĐ-16 | Định nghĩa chặt "sự kiện": bắt đầu/kết thúc, ngưỡng | A4.2, tiêu chí PoC-3 | 🟡 |
+| QĐ-17 | Thang ưu tiên: H/M/L hay MoSCoW | Bản ghi yêu cầu | 🟢 chọn nhanh |
 
-## Vấn đề phát sinh từ việc áp Volere
+## Đã đóng
 
-| # | Vấn đề | Mức |
+| # | Vấn đề | Kết luận |
 |---|---|---|
-| QĐ-13 | Bảng thuật ngữ đặt ở Charter hay ở `04-terminology.md`? Volere đòi một nguồn duy nhất | 🟡 |
-| QĐ-14 | Ranh giới sản phẩm (§8a): lập lộ trình chạy tàu, dựng báo cáo, quản lý thư viện — trong hay ngoài sản phẩm? | 🔴 cao |
-| QĐ-15 | Thang ưu tiên dùng H/M/L hay MoSCoW? | 🟢 thấp — chọn nhanh |
+| QĐ-0 | Nhiệm vụ chính | ✅ **Phao giám sát thuỷ âm thụ động** |
+| QĐ-9 | Chuyển nấc PGA | ✅ Tự động — mục tiêu giám sát xuất hiện bất ngờ |
+| QĐ-10 | Nhánh xử lý dải cao | ✅ Bỏ khỏi vòng 1 — một đường lấy mẫu duy nhất |
+| QĐ-11 | Kênh nghe tương tự ↔ mã hoá | ✅ Bỏ cả hai khỏi vòng 1 — xung đột tự hết |
+| QĐ-12 | Mô hình suy hao truyền âm | ✅ Không còn áp dụng — bỏ chuẩn hoá cự ly |
+| QĐ-13 | Vị trí bảng thuật ngữ | ✅ Giữ ở Charter §11, các nơi khác trỏ sang |
+| QĐ-14 | Ranh giới sản phẩm | ✅ Đặt rộng về phía con người ở PoC — xem `08-scope-of-product.md` |
 

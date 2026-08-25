@@ -1,29 +1,30 @@
 # 25. User Documentation and Training — Tài liệu và đào tạo người dùng
 
-> **Volere v20 §25** · Đặc tả Yêu cầu HW-SNR-26
-> **Trạng thái:** 🔴 Trống
+> **Volere v20 §25** · Đặc tả Yêu cầu HW-SNR-26 · **Vòng xoắn 1 — PoC**
+> **Trạng thái:** 🟡 Đang soạn
 > **Phụ trách:** Kỹ sư hệ thống
 > **Cập nhật:** 2026-08-25
 
 ## Mục đích phần này (theo Volere)
 
-**25a** User documentation requirements · **25b** Training requirements.
+**25a** User documentation · **25b** Training.
 
 ---
 
-## Ứng viên
+## Vòng 1 — chỉ tài liệu kỹ thuật nội bộ
 
-| Tài liệu | Đối tượng | Trạng thái |
-|---|---|---|
-| Hướng dẫn triển khai và thu hồi phao | Kỹ thuật viên | 🔴 |
-| Hướng dẫn vận hành trạm điều khiển | Trắc thủ | 🔴 |
-| Hướng dẫn phân tích và lập báo cáo | Nhà phân tích | 🔴 |
-| Quy trình hiệu chuẩn | Kỹ sư hiệu chuẩn | 🔴 |
-| Tài liệu kỹ thuật hệ thống | Kỹ sư bảo trì | 🟡 (Charter + Spec là khởi đầu) |
+Không có người dùng cuối, nên không có tài liệu hướng dẫn sử dụng và không có đào tạo.
+`[V2+]` cho cả hai.
 
-## Đào tạo
+**Tài liệu vòng 1 phải có:**
 
-> **Câu hỏi chưa trả lời:** người dùng cuối có nền tảng âm học không? Nếu không, đào tạo
-> phải bao gồm cả **kiến thức nền** chứ không chỉ thao tác phần mềm — khối lượng khác hẳn.
-> Liên kết §11c (Learning requirements).
+| Tài liệu | Vì sao bắt buộc |
+|---|---|
+| **Quy trình chuyến biển** (BUC-1 chi tiết) | Chuyến biển tốn kém, không được ứng biến tại chỗ |
+| **Nhật ký cấu hình treo** | Không ghi thì không so sánh được — phép đo trung tâm mất ý nghĩa |
+| **Hồ sơ hiệu chuẩn trước và sau chuyến** | Phát hiện trôi hiệu chuẩn giữa chuyến |
+| **Báo cáo kết quả vòng xoắn** | Đầu vào cho quyết định ở G4 |
+
+> Ba tài liệu đầu là **công cụ làm việc trong chuyến**, không phải giấy tờ hình thức. Thiếu
+> chúng thì dữ liệu thu được có thể không dùng được để phán quyết PoC.
 
